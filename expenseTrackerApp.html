@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="margin: 0">
+    <div class="container mt-5">
+        <h2>Expense Tracker</h2>
+        <form onsubmit="handleFormSubmit(event)" class="mb-4">
+            <div class="form-group">
+                <label for="expenseAmount">Choose Expense Amount</label>
+                <input type="number" class="form-control" name="expenseAmount" id="expenseAmount" required />
+            </div>
+            <div class="form-group">
+                <label for="description">Choose Description</label>
+                <input type="text" class="form-control" name="description" id="description" required />
+            </div>
+            <div class="form-group">
+                <label for="category">Choose a Category</label>
+                <select class="form-control" name="category" id="category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Fuel">Fuel</option>
+                    <option value="Food">Food</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Movie">Movie</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <input type="hidden" id="editIndex" />
+            <button type="submit" class="btn btn-primary">Add Expense</button>
+        </form>
+        <h3>Expense List</h3>
+        <ul id="expenseList" class="list-group"></ul>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="expenseTrackerApp.js"></script>
+</body>
+</html>

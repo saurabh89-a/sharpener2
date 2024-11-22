@@ -1,11 +1,20 @@
-const apiUrl = 'https://crudcrud.com/api/852d403b5b94454db87d2fc6ac2680b2/admin'; // Change this to your actual API endpoint
+const apiUrl = 'https://crudcrud.com/api/132322d465414bb09e8091d4f04161f3/unicorns'; 
+//Ye ek endpoint hai jahan se data fetch, save, update, aur delete hota hai.
 
-let products = [];
-let currentProductId = null;
+//It uses Axios for making API calls and performs operations such as adding, displaying, categorizing, updating, and deleting products from an external API.
 
+// axios:Axios is a popular JavaScript library used to make HTTP requests from a web browser or Node.js.
+
+let products = [];  
+// products: Ek array jo API se fetched products ko store karta hai.
+// currentProductId: Agar kisi product ko update karna ho, toh uska ID yahan store hota hai.
+let currentProductId = null;  
+
+// Naya product add karna ya existing product ko update karna.
 async function handleFormSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(); //Default form reload ko prevent karta hai.
 
+    // Form fields (sellingPrice, productName, category) se data le kar ek object (productData) me store karta hai.
     const sellingPrice = document.getElementById('sellingPrice').value;
     const productName = document.getElementById('productName').value;
     const category = document.getElementById('category').value;
@@ -19,17 +28,20 @@ async function handleFormSubmit(event) {
             await axios.delete(`${apiUrl}/${currentProductId}`);
             currentProductId = null; // Reset the current product ID
         } else {
-            // Create new product
+            
+            // Adds a new product to the API and stores it in the products array.
             const response = await axios.post(apiUrl, productData);
             products.push(response.data);
         }
-        clearFormFields();
-        displayProducts();
+        clearFormFields();// Form fields ko reset karta hai.
+        displayProducts();//Updated list ko dikhata hai.
     } catch (error) {
         console.error('Error saving product:', error.response ? error.response.data : error.message);
     }
 }
 
+
+// Products ko category-wise organize karna
 async function displayProducts() {
     const userList = document.getElementById('userList');
     userList.innerHTML = '';
@@ -42,16 +54,20 @@ async function displayProducts() {
     userList.appendChild(productsHeader);
 
     try {
+        // Fetches all products from the API and stores them in the products array.
         const response = await axios.get(apiUrl);
         products = response.data;
 
         // Create a map to categorize products
+        // Groups the products into categories.
         const categorizedProducts = categories.reduce((acc, category) => {
             acc[category] = products.filter(product => product.category === category);
             return acc;
         }, {});
 
-        // Display categories and products
+       
+        // Add a header (h3) for the category.
+        // Add each product under its respective category.
         for (const [category, items] of Object.entries(categorizedProducts)) {
             const categoryHeader = document.createElement('h3');
             categoryHeader.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} Items`;
@@ -64,6 +80,7 @@ async function displayProducts() {
                 // Add margin to indent the items under their respective categories
                 listItem.style.marginLeft = '30px'; // Indent the item
 
+                // Adds a "Delete Order" button next to each product.
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete Order';
                 deleteButton.onclick = () => deleteProduct(product._id);
@@ -78,6 +95,9 @@ async function displayProducts() {
     }
 }
 
+
+// Sends a DELETE request to the API with the product's ID.
+// Refreshes the product list to reflect the change.
 async function deleteProduct(productId) {
     try {
         await axios.delete(`${apiUrl}/${productId}`);
@@ -87,6 +107,8 @@ async function deleteProduct(productId) {
     }
 }
 
+
+// Clears the input fields in the form.
 function clearFormFields() {
     document.getElementById('sellingPrice').value = '';
     document.getElementById('productName').value = '';
@@ -94,3 +116,5 @@ function clearFormFields() {
 }
 
 window.onload = displayProducts;
+
+

@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sellers Admin Page</title>
 </head>
-<body style="margin: 0">
+
+<body>
+    <!-- onsubmit:JavaScript function handleFormSubmit ko call karta hai jab form submit hota hai.  -->
     <form onsubmit="handleFormSubmit(event)">
         <label for="sellingPrice">Selling Price</label>
         <input type="number" name="sellingPrice" id="sellingPrice" required />
@@ -18,15 +20,20 @@
         <select name="category" id="category" required>
             <option value="food">Food</option>
             <option value="electronics">Electronics</option>
-            <option value="skinCare">Skin Care</option>
+            <option value="skincare">Skin Care</option>
             <option value="other">Other</option>
         </select>
-        
-        <input type="hidden" id="editIndex" />
+                
         <button type="submit">Add Product</button>
     </form>
+
+    <!-- project ke display (webpage) par ek product list show hoti hai jo alag-alag categories me organize hoti hai. -->
     <ul id="userList"></ul>
 </body>
+
+<!-- <script>: External JavaScript files ko include karta hai.
+axios: Ek library jo HTTP (hypertext transfer protocal) requests bhejne mein madad karti hai. -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
 <script src="admin.js"></script>
 
